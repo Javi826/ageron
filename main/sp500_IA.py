@@ -20,8 +20,8 @@ warnings.filterwarnings("ignore")
 
 # YAHOO Call
 symbol = "^GSPC"
-start_date = "1948-12-30"
-end_date = "2023-11-30"
+start_date = "2000-01-01"
+end_date = "2020-12-31"
 sp500_data = yf.download(symbol, start=start_date, end=end_date)
 
 # SAVE yahoo file

@@ -14,7 +14,7 @@ def mod_dtset_clean(df_data):
     # rstart or define main DataFrame 
     if 'df_data_clean' in locals() and restart_dataframes:del df_data_clean  # delete dataframe if exits
     
-    #print(f'START MODUL mod_dtset_clean')
+    print(f'START MODUL mod_dtset_clean')
     #print(f'Execution start time: {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_start))}\n')
     
     
@@ -108,7 +108,7 @@ def mod_dtset_clean(df_data):
     #print(f"DataFrame saved in: {path_save}")
     #print("Time execution:",time_execution)
     #print(f'Execution end time: {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_end))}')
-    #print(f'END MODUL mod_dtset_clean\n')
+    print(f'END MODUL mod_dtset_clean\n')
     
     return df_data_clean
 

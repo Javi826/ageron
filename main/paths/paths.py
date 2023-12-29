@@ -3,8 +3,8 @@
 import os
 
 # Directory to store CSV files
-csv_folder = r"C:\Users\jlaho\Desktop\Programas\Spyder\sp500_IA\inputs\historicyh"
-path_base = r"C:\Users\jlaho\Desktop\Programas\Spyder\sp500_IA"
+csv_folder = r"C:\Users\jlaho\Desktop\ML\ageron\sp500_IA\inputs\historicyh"
+path_base = r"C:\Users\jlaho\Desktop\ML\ageron\sp500_IA"
 folder = "inputs\historicyh"
 archivo = "sp500_data.csv"
 csv_file_path = os.path.join(csv_folder, "sp500_data.csv")

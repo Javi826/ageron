@@ -4,14 +4,16 @@ import pandas as pd
 import os
 import time
 import matplotlib.pyplot as plt
+import warnings
+import numpy as np
 from statsmodels.tsa.arima.model import ARIMA
+from sklearn.model_selection import train_test_split
 from modules.mod_dtset_clean import mod_dtset_clean
 from paths.paths import csv_folder, path_base,folder,archivo,path_absolut
-import warnings
+
 
 # IGNORE WARNINGS
 warnings.filterwarnings("ignore")
-
 
 #VISUALIZATION PRINTS
 pd.set_option('display.max_columns', None)
@@ -34,8 +36,8 @@ def filter_data_by_date_range(df, start_date, end_date):
     return df[(df['date'] >= start_date) & (df['date'] <= end_date)]
 
 # choose range
-start_date = '2005-01-01'
-end_date = '2006-01-02'
+start_date = '2000-01-01'
+end_date = '2020-12-31'
 
 # filtering data by date
 df_clean = filter_data_by_date_range(df_clean, start_date, end_date)
@@ -44,13 +46,61 @@ df_clean = filter_data_by_date_range(df_clean, start_date, end_date)
 #print(df_clean.head(1))
 #print(df_clean.tail(1))
 
-# Conteo de registros entre start_date y end_date
-conteo_registros = df_clean.shape[0]
+#SUMARY
+summary_stats_all = df_clean.describe(include='all')
+print(summary_stats_all)
+
+#HISTOGRAM
+# Seleccionar columnas de interés
+columns_of_interest = ['close', 'var_day', 'volume','day_week']
+
+# Configurar la figura
+fig, axes = plt.subplots(nrows=1, ncols=len(columns_of_interest), figsize=(15, 5))
+
+# Generar histogramas para cada columna
+for i, column in enumerate(columns_of_interest):
+    axes[i].hist(df_clean[column], bins=30, color='skyblue', edgecolor='black')
+    axes[i].set_title(f'Histograma de {column}')
+    axes[i].set_xlabel(column)
+    axes[i].set_ylabel('Frecuencia')
+
+# Ajustar el diseño
+plt.tight_layout()
+plt.show()
+
+#TRAIN AND TEST DATA
+
+def shuffle_and_split_data(data, test_ratio=0.2):
+    np.random.seed(42)  
+    shuffled_indices = np.random.permutation(len(data))
+    test_set_size = int(len(data) * test_ratio)
+    test_indices = shuffled_indices[:test_set_size]
+    train_indices = shuffled_indices[test_set_size:]
+    train_set = data.iloc[train_indices]
+    test_set = data.iloc[test_indices]
+
+    return data.iloc[train_indices], data.iloc[test_indices]
+
+train_set, test_set = shuffle_and_split_data(df_clean)
+
+
+print("Número de registros en train_set:", len(train_set))
+print("Número de registros en test_set:", len(test_set))
+
+train_set, test_set = train_test_split(df_clean, test_size=0.2,random_state=42)
+
+print("Número de registros en train_set:", len(train_set))
+print("Número de registros en test_set:", len(test_set))
+
+# Ahora puedes imprimir train_indices
+#print(train_set)
+#print(train_set)
 
 #print(f"El número de registros entre {start_date} y {end_date} es: {conteo_registros}")
 
 #SMA window n days
 df_clean['SMA_n'] = df_clean['close'].rolling(window=30).mean()
+
 
 # differenciation m days
 df_clean['diff_tn'] = df_clean['close'].diff(30)
@@ -67,52 +117,9 @@ df_clean['naive_value'] = df_clean['close'] + MAE_naive
 #print(df_clean[['date', 'close', 'naive_value']].tail(5))
 
 
-#ARIMA----------------------------------------------------------------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------------
 
 
-# Define the values for the parameters p, d, and q you want to try
-p_values = [1]
-d_values = [0]
-q_values = [1]
-
-# Other parameters
-seasonal_order = (0, 1, 1, 30)  # You can adjust according to your needs
-
-# Filter and adjust the time series (you can reuse this code)
-df_series = df_clean.set_index('date')
-df_series = df_series.loc[start_date:end_date]['close'].asfreq('D')
-
-# Loop to try different values of p, d, and q
-for p in p_values:
-    for d in d_values:
-        for q in q_values:
-            # Fit the ARIMA model
-            model = ARIMA(df_series, order=(p, d, q), seasonal_order=seasonal_order)
-            model_fit = model.fit()
-
-            # Get the forecast for the next period
-            y_close = model_fit.forecast()
-            forecasted_value = y_close[0]
-
-            # Compare the results with the real values
-            df_clean_full = mod_dtset_clean(df_data)
-            df_clean_full['forecasted_value'] = forecasted_value
-            df_clean_full['delta_close-forecasted'] = df_clean_full['close'] - df_clean_full['forecasted_value']
-            df_clean_full['%_forecasted'] = (df_clean_full['delta_close-forecasted'] / df_clean_full['close']) * 100
-
-            # Filter records from the date following end_date (including end_date)
-            records_post_end_date = df_clean_full[df_clean_full['date'] >= end_date].iloc[1:2]
-
-            # Print the results
-            columns_to_print = ['date', 'close', 'forecasted_value', 'delta_close-forecasted', '%_forecasted']
-            print(f"\nResults for p={p}, d={d}, q={q}")
-            print(records_post_end_date[columns_to_print])
-            print(model_fit.summary())
-
-
-# Graficar la serie temporal con la media móvil y la diferenciación
+# PLOT
 plt.figure(figsize=(10, 6))
 plt.plot(df_clean['date'], df_clean['close'], label='Close Price')
 plt.plot(df_clean['date'], df_clean['SMA_n'], label='SMA n days', linestyle='--', color='orange')  # Agrega la media móvil al gráfico
