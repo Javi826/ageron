@@ -23,15 +23,6 @@ pd.set_option('display.expand_frame_repr', False)
 df_data = pd.read_csv(path_absolut, header=None, skiprows=1, names=['date','open','high','low','close','adj_close','volume'])
 df_clean = mod_dtset_clean(df_data)
 
-#PEARSONS
-# numeric columns select
-columns_numeric = df_clean.select_dtypes(include=['float', 'int']).columns
-
-# Pearson + Sort ascdending
-pearsons = df_clean[columns_numeric].corrwith(df_clean['close'], method='pearson').sort_values(ascending=False)
-
-print(pearsons)
-
 def filter_data_by_date_range(df, start_date, end_date):
     return df[(df['date'] >= start_date) & (df['date'] <= end_date)]
 
@@ -52,7 +43,7 @@ summary_stats_all = df_clean.describe(include='all')
 
 #HISTOGRAM
 # Select columns
-columns_of_interest = ['close', 'var_day', 'volume','day_week']
+columns_of_interest = ['close', 'var_day', 'volume','day_week','high','low','adj_close']
 
 # plot
 fig, axes = plt.subplots(nrows=1, ncols=len(columns_of_interest), figsize=(15, 5))
@@ -71,11 +62,6 @@ plt.show()
 #TRAIN AND TEST DATA selection
 train_set, test_set = train_test_split(df_clean, test_size=0.2,random_state=42)
 strat_train_set, strat_test_set = train_test_split(df_clean, test_size=0.2,stratify= df_clean['day_week'], random_state=42)
-
-print("Número de registros en train_set:", len(train_set))
-print("Número de registros en test_set:", len(test_set))
-print("Número de registros en train_set:", len(strat_train_set))
-print("Número de registros en test_set:", len(strat_test_set))
 
 print(strat_test_set["day_week"].value_counts() / len(strat_test_set))
 
