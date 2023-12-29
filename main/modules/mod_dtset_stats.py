@@ -23,14 +23,14 @@ pd.set_option('display.expand_frame_repr', False)
 df_data = pd.read_csv(path_absolut, header=None, skiprows=1, names=['date','open','high','low','close','adj_close','volume'])
 df_clean = mod_dtset_clean(df_data)
 
-
+#PEARSONS
 # numeric columns select
 columns_numeric = df_clean.select_dtypes(include=['float', 'int']).columns
 
 # Pearson + Sort ascdending
 pearsons = df_clean[columns_numeric].corrwith(df_clean['close'], method='pearson').sort_values(ascending=False)
 
-#print(pearsons)
+print(pearsons)
 
 def filter_data_by_date_range(df, start_date, end_date):
     return df[(df['date'] >= start_date) & (df['date'] <= end_date)]
@@ -48,55 +48,51 @@ df_clean = filter_data_by_date_range(df_clean, start_date, end_date)
 
 #SUMARY
 summary_stats_all = df_clean.describe(include='all')
-print(summary_stats_all)
+#print(summary_stats_all)
 
 #HISTOGRAM
-# Seleccionar columnas de interés
+# Select columns
 columns_of_interest = ['close', 'var_day', 'volume','day_week']
 
-# Configurar la figura
+# plot
 fig, axes = plt.subplots(nrows=1, ncols=len(columns_of_interest), figsize=(15, 5))
 
-# Generar histogramas para cada columna
+# Columns
 for i, column in enumerate(columns_of_interest):
     axes[i].hist(df_clean[column], bins=30, color='skyblue', edgecolor='black')
-    axes[i].set_title(f'Histograma de {column}')
+    axes[i].set_title(f'Histogram de {column}')
     axes[i].set_xlabel(column)
-    axes[i].set_ylabel('Frecuencia')
+    axes[i].set_ylabel('frequency')
 
-# Ajustar el diseño
+# design
 plt.tight_layout()
 plt.show()
 
-#TRAIN AND TEST DATA
-
-def shuffle_and_split_data(data, test_ratio=0.2):
-    np.random.seed(42)  
-    shuffled_indices = np.random.permutation(len(data))
-    test_set_size = int(len(data) * test_ratio)
-    test_indices = shuffled_indices[:test_set_size]
-    train_indices = shuffled_indices[test_set_size:]
-    train_set = data.iloc[train_indices]
-    test_set = data.iloc[test_indices]
-
-    return data.iloc[train_indices], data.iloc[test_indices]
-
-train_set, test_set = shuffle_and_split_data(df_clean)
-
-
-print("Número de registros en train_set:", len(train_set))
-print("Número de registros en test_set:", len(test_set))
-
+#TRAIN AND TEST DATA selection
 train_set, test_set = train_test_split(df_clean, test_size=0.2,random_state=42)
+strat_train_set, strat_test_set = train_test_split(df_clean, test_size=0.2,stratify= df_clean['day_week'], random_state=42)
 
 print("Número de registros en train_set:", len(train_set))
 print("Número de registros en test_set:", len(test_set))
+print("Número de registros en train_set:", len(strat_train_set))
+print("Número de registros en test_set:", len(strat_test_set))
 
-# Ahora puedes imprimir train_indices
-#print(train_set)
-#print(train_set)
+print(strat_test_set["day_week"].value_counts() / len(strat_test_set))
 
-#print(f"El número de registros entre {start_date} y {end_date} es: {conteo_registros}")
+#percentage_per_day_clean = (df_clean['day_week'].value_counts(normalize=True) * 100).sort_index()
+percentage_per_day_clean = (df_clean['day_week'].value_counts() / len(df_clean))
+# Print the results
+print("\nPercentage of records by day of the week in df_clean:")
+print(percentage_per_day_clean)
+
+#PEARSONS
+# numeric columns select
+columns_numeric = df_clean.select_dtypes(include=['float', 'int']).columns
+
+# Pearson + Sort ascdending
+pearsons = df_clean[columns_numeric].corrwith(df_clean['close'], method='pearson').sort_values(ascending=False)
+
+print(pearsons)
 
 #SMA window n days
 df_clean['SMA_n'] = df_clean['close'].rolling(window=30).mean()
