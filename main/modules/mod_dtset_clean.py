@@ -1,11 +1,15 @@
-# modules/mod_dtset_clean.py
+# DATASET CLEANING
+from modules.mod_init import *
+import warnings
+import time
 import pandas as pd
 import os
-import time
-from paths.paths import path_base,folder,archivo,csv_file_path,path_absolut, path_destination, path_save
-
-# Timing
-time_start = time.time()
+import matplotlib.pyplot as plt
+import numpy as np
+from paths.paths import (
+    path_base,path_file_csv, folder_csv, folder_df_data_clean, path_df_data_clean,
+    folder_functional, file_preprocessing
+)
 
 def mod_dtset_clean(df_data):
     
@@ -15,9 +19,7 @@ def mod_dtset_clean(df_data):
     if 'df_data_clean' in locals() and restart_dataframes:del df_data_clean  # delete dataframe if exits
     
     print(f'START MODUL mod_dtset_clean')
-    #print(f'Execution start time: {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_start))}\n')
-    
-    
+            
     df_data_clean = df_data.copy()
     
     def day_week(df_data_clean):
@@ -52,12 +54,13 @@ def mod_dtset_clean(df_data):
     
     def sort_columns(df_data_clean):
 
-        desired_column_order = ['date', 'day_week', 'close', 'open', 'high', 'low', 'adj_close', 'var_day','volume']
+        #desired_column_order = columns_clean
+        desired_column_order= ['date', 'day_week', 'close', 'open', 'high', 'low', 'adj_close', 'var_day','volume']
     
         # Asegúrate de que todas las columnas especificadas estén presentes en el DataFrame
         missing_columns = set(desired_column_order) - set(df_data_clean.columns)
         if missing_columns:
-            raise ValueError(f"Las siguientes columnas no están presentes en el DataFrame: {', '.join(missing_columns)}")
+            raise ValueError(f"following columns no in DataFrame: {', '.join(missing_columns)}")
     
         # Sort columns
         df_data_clean = df_data_clean[desired_column_order]
@@ -94,21 +97,16 @@ def mod_dtset_clean(df_data):
     
     #print("Step 04 OK: rounding_data") 
     
-    # TIMING
-    time_end = time.time()
-    time_execution = round((time_end - time_start), 1)
     
     # SAVE FILE
-    if not os.path.exists(os.path.join(path_base, path_destination)): os.makedirs(os.path.join(path_base, path_destination))
-    df_data_clean.to_csv(path_save, index=False)
-    
-    
-    time_end = time.time()
-    time_execution = round((time_end - time_start), 1)
+    if not os.path.exists(os.path.join(path_base, folder_df_data_clean)): os.makedirs(os.path.join(path_base, folder_df_data_clean))
+    df_data_clean.to_csv(path_df_data_clean, index=False)
+  
+   
     #print(f"DataFrame saved in: {path_save}")
     #print("Time execution:",time_execution)
     #print(f'Execution end time: {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_end))}')
-    print(f'END MODUL mod_dtset_clean\n')
+    print(f'ENDIN MODUL mod_dtset_clean\n')
     
     return df_data_clean
 

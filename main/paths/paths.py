@@ -1,16 +1,25 @@
 #PATHS
+"""
+Created on Sat Dec 30 21:06:19 2023
+
+@author: jlahoz
+"""
 
 import os
 
 # Directory to store CSV files
-csv_folder = r"C:\Users\jlaho\Desktop\ML\ageron\sp500_IA\inputs\historicyh"
-path_base = r"C:\Users\jlaho\Desktop\ML\ageron\sp500_IA"
-folder = "inputs\historicyh"
-archivo = "sp500_data.csv"
-csv_file_path = os.path.join(csv_folder, "sp500_data.csv")
-path_absolut = os.path.join(path_base, folder, archivo)
-path_destination = "inputs\dtset_clean"
-path_save = os.path.join(path_base, path_destination, "df_data_clean.csv")
+path_base = r"C:\Users\jlahoz\Desktop\ML\ageron\sp500_IA"
+
+file_df_data = "sp500_data.csv"
+folder_csv = "inputs\historicyh"
+path_file_csv = os.path.join(path_base,folder_csv,file_df_data)
+
+file_df_data_clean = "df_data_clean.csv"
+folder_df_data_clean = "inputs\dtset_clean"
+path_df_data_clean = os.path.join(path_base,folder_df_data_clean, file_df_data_clean)
+
+file_preprocessing = 'df_preprocessing.xlsx'
+folder_functional = r"C:\Users\jlahoz\Desktop\ML\ageron\sp500_IA\outputs\functional"
 
 
 
