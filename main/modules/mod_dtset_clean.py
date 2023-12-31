@@ -1,14 +1,14 @@
 # DATASET CLEANING
 from modules.mod_init import *
 from functions.def_functions import *
-from paths.paths import (
-    path_base,path_file_csv, folder_csv, folder_df_data_clean, path_df_data_clean,
-    folder_functional, file_preprocessing
-)
+from paths.paths import *
+
 
 #df_data = pd.read_csv(path_file_csv, header=None, skiprows=1, names=['date','open','high','low','close','adj_close','volume'])
 #start_date = "1970-01-01"
 #endin_date = "1990-12-31"
+
+
 def mod_dtset_clean(df_data,start_date,endin_date):
     
     # restart dataframe jic
@@ -35,7 +35,6 @@ def mod_dtset_clean(df_data,start_date,endin_date):
     print(f'ENDIN MODUL mod_dtset_clean\n')
     
     return df_data_clean
-
 
 if __name__ == "__main__":
     #Este bloque se ejecutará solo si el script se ejecuta directamente,

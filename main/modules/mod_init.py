@@ -24,11 +24,9 @@ from sklearn.pipeline import make_pipeline
 from sklearn.compose import ColumnTransformer
 
 from modules.mod_dtset_clean import mod_dtset_clean
-from paths.paths import (
-    path_base,path_file_csv, folder_csv, folder_df_data_clean, path_df_data_clean,
-    folder_functional, path_preprocessing,file_preprocessing
-)
 
+global columns_csv
+global columns_clean
 columns_csv= ['date','open','high','low','close','adj_close','volume']
 columns_clean= ['date', 'day_week', 'close', 'open', 'high', 'low', 'adj_close', 'var_day','volume']
 

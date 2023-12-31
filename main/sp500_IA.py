@@ -1,11 +1,14 @@
 # MAIN
 from modules.mod_init import *
+from paths.paths import *
 from modules.mod_dtset_clean import mod_dtset_clean
 
 # YAHOO Call
 symbol = "^GSPC"
+global start_date
+global endin_date
 start_date = "1980-01-01"
-endin_date = "1990-12-31"
+endin_date = "2022-12-31"
 sp500_data = yf.download(symbol, start=start_date, end=endin_date)
 
 # SAVE yahoo file
