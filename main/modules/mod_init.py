@@ -25,8 +25,8 @@ from sklearn.compose import ColumnTransformer
 
 from modules.mod_dtset_clean import mod_dtset_clean
 from paths.paths import (
-    path_file_csv, folder_csv, folder_df_data_clean, path_df_data_clean,
-    folder_functional, file_preprocessing
+    path_base,path_file_csv, folder_csv, folder_df_data_clean, path_df_data_clean,
+    folder_functional, path_preprocessing,file_preprocessing
 )
 
 columns_csv= ['date','open','high','low','close','adj_close','volume']

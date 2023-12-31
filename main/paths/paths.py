@@ -19,7 +19,8 @@ folder_df_data_clean = "inputs\dtset_clean"
 path_df_data_clean = os.path.join(path_base,folder_df_data_clean, file_df_data_clean)
 
 file_preprocessing = 'df_preprocessing.xlsx'
-folder_functional = r"C:\Users\jlahoz\Desktop\ML\ageron\sp500_IA\outputs\functional"
+folder_functional = "outputs\\functional"
+path_preprocessing = os.path.join(path_base,folder_functional, file_preprocessing)
 
 
 
