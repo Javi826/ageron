@@ -28,8 +28,8 @@ df_clean_filter['date'] = pd.to_datetime(df_clean_filter['date'])
 #df_clean_filter['year'] = df_clean_filter['date'].dt.strftime('%Y')
 
 #PLOT
-df_plots(df_clean_filter['date'],df_clean_filter['close'],'date','close')
-
+df_plots(df_clean_filter['date'],df_clean_filter['close'],'date','close','lines')
+print(df_clean_filter['date'])
 #SUMARY
 summary_stats_all = df_clean_filter.describe(include='all')
 print(summary_stats_all)

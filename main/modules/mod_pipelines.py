@@ -14,11 +14,12 @@ file_path_df_data_clean = os.path.join(path_base, folder_df_data_clean, file_df_
 
 # READING file
 df_data_clean = pd.read_csv(file_path_df_data_clean, header=None, skiprows=1, names=columns_clean)
-print(df_data_clean.head(5))
+#print(df_data_clean.head(5))
 
 # FILTER Range
 filter_start_date = '2000-01-01'
 filter_endin_date = '2020-12-31'
+
 
 # filtering data by date
 df_clean_filter = filter_data_by_date_range(df_data_clean, filter_start_date, filter_endin_date)
@@ -26,11 +27,11 @@ df_clean_filter = filter_data_by_date_range(df_data_clean, filter_start_date, fi
 
 #TRAIN AND TEST DATA selection
 strat_train_set, strat_test_set = train_test_split(df_clean_filter, test_size=0.2,stratify= df_clean_filter['day_week'], random_state=42)
-print(strat_test_set["day_week"].value_counts() / len(strat_test_set))
+#print(strat_test_set["day_week"].value_counts() / len(strat_test_set))
 
 percentage_per_day_clean = (df_clean_filter['day_week'].value_counts() / len(df_clean_filter))
-print("\nPercentage of records by day of the week in df_clean_filter:")
-print(percentage_per_day_clean)
+#print("\nPercentage of records by day of the week in df_clean_filter:")
+#print(percentage_per_day_clean)
 
 #PREPROCESSING
 null_imputer = SimpleImputer(strategy="constant", fill_value=None)
@@ -55,15 +56,24 @@ preprocessing = ColumnTransformer([
     ],
     remainder="passthrough")
 
-df_plots()
-
 #PRINT preprocessing
 X_preprocessing = preprocessing.fit_transform(df_clean_filter)
-#print(X_preprocessing)
 
 df_preprocessing=pd.DataFrame(X_preprocessing)
+#print(df_preprocessing.head(5))
+
+# Obtain the names of the original columns or define new names
+column_pre_names = ['trans_var_day', 'trans_adj_close', 'trans_open','trans_high','trans_low','trans_volume','date','day_week','close'] 
+
+# Create a DataFrame with the transformed data and column names
+df_preprocessing = pd.DataFrame(X_preprocessing, columns=column_pre_names)
+
+# Print the first rows of the DataFrame with the assigned column names
+print(df_preprocessing.head(5))
+df_preprocessing['date'] = pd.to_datetime(df_preprocessing['date'])
+df_plots(df_preprocessing['date'],df_preprocessing['trans_adj_close'],'date','trans_adj_close','lines')
 
 # Guardar el DataFrame df_preprocessing en un archivo Excel
 excel_file_path = os.path.join(path_base, folder_functional, "df_preprocessing.xlsx")
 df_preprocessing.to_excel(excel_file_path, index=False)
-print(f'DataFrame df_preprocessing guardado en: {excel_file_path}')
+#print(f'DataFrame df_preprocessing guardado en: {excel_file_path}')

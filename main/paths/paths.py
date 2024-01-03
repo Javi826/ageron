@@ -1,7 +1,6 @@
 #PATHS
 """
 Created on Sat Dec 30 21:06:19 2023
-
 @author: jlahoz
 """
 

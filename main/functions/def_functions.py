@@ -55,17 +55,24 @@ def filter_data_by_date_range(df, start_date, end_date):
     return df[(df['date'] >= start_date) & (df['date'] <= end_date)]
 
 
-def df_plots(x, y, x_label, y_label):
+def df_plots(x, y, x_label, y_label,plot_style):
     
     plt.figure(figsize=(10, 6))
-    plt.plot(x, y, label=f'{x_label} vs {y_label}')  
-    plt.title(f'{x_label} vs {y_label} Line Plot')
+    
+    if plot_style == "lines":
+        plt.plot(x, y, label=f'{x_label} vs {y_label}')  # Use a line plot
+    elif plot_style == "points":
+        plt.scatter(x, y, label=f'{x_label} vs {y_label}', marker='o')  # Use a scatter plot with markers
+    else:
+        raise ValueError("Invalid plot_style. Use 'lines' or 'points'.")
+
+    plt.title(f'{x_label} vs {y_label} Plot')
     plt.xlabel(x_label)
     plt.ylabel(y_label)
     plt.legend()
     plt.grid(True)
     plt.show()
-    
+            
 def plots_histograms(dataframe, columns_of_interest):
     bins = 30
     figsize = (15, 5)
