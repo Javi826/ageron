@@ -10,12 +10,11 @@ from paths.paths import *
 
 
 def mod_dtset_clean(df_data,start_date,endin_date):
+    print(f'START MODUL mod_dtset_clean')
     
     # restart dataframe jic
     restart_dataframes = True  
-    if 'df_data_clean' in locals() and restart_dataframes:del df_data_clean  # delete dataframe if exits
-    
-    print(f'START MODUL mod_dtset_clean')
+    if 'df_data_clean' in locals() and restart_dataframes:del df_data_clean  # delete dataframe if exits 
             
     df_data_clean = df_data.copy()
     df_data_clean = day_week(df_data_clean)
@@ -24,16 +23,12 @@ def mod_dtset_clean(df_data,start_date,endin_date):
     df_data_clean = rounding_data(df_data_clean)
         
     # SAVE FILE with start_date and endin_date suffixes
+    if not os.path.exists(os.path.join(path_base, folder_df_data_clean)):os.makedirs(os.path.join(path_base, folder_df_data_clean))
     file_df_data_clean = f"df_data_clean_{start_date}_{endin_date}.csv"
     save_file_path = os.path.join(path_base, folder_df_data_clean, file_df_data_clean)
-    
-    if not os.path.exists(os.path.join(path_base, folder_df_data_clean)):
-        os.makedirs(os.path.join(path_base, folder_df_data_clean))
-    
     df_data_clean.to_csv(save_file_path, index=False)
     
     print(f'ENDIN MODUL mod_dtset_clean\n')
-    
     return df_data_clean
 
 if __name__ == "__main__":

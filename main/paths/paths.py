@@ -7,7 +7,7 @@ Created on Sat Dec 30 21:06:19 2023
 import os
 
 # Directory to store CSV files
-path_base = r"C:\Users\jlahoz\Desktop\ML\ageron\sp500_IA"
+path_base = r"C:\Users\javier\Desktop\ML\ageron"
 
 file_df_data = "sp500_data.csv"
 folder_csv = "inputs\historicyh"
@@ -20,6 +20,8 @@ path_df_data_clean = os.path.join(path_base,folder_df_data_clean, file_df_data_c
 file_preprocessing = 'df_preprocessing.xlsx'
 folder_functional = "outputs\\functional"
 path_preprocessing = os.path.join(path_base,folder_functional, file_preprocessing)
+
+
 
 
 

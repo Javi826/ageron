@@ -17,8 +17,8 @@ df_data_clean = pd.read_csv(file_path_df_data_clean, header=None, skiprows=1, na
 print(df_data_clean.head(5))
 
 # STATS Range
-filter_start_date = '2000-01-01'
-filter_endin_date = '2020-12-31'
+filter_start_date = '2005-01-01'
+filter_endin_date = '2005-12-31'
 
 # filtering data by date
 df_clean_filter = filter_data_by_date_range(df_data_clean, filter_start_date, filter_endin_date)
