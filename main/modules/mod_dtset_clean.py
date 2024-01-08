@@ -2,6 +2,7 @@
 from modules.mod_init import *
 from functions.def_functions import *
 from paths.paths import *
+from columns.columns import *
 
 
 #df_data = pd.read_csv(path_file_csv, header=None, skiprows=1, names=['date','open','high','low','close','adj_close','volume'])
@@ -10,6 +11,7 @@ from paths.paths import *
 
 
 def mod_dtset_clean(df_data,start_date,endin_date):
+    print('\n')
     print(f'START MODUL mod_dtset_clean')
     
     # restart dataframe jic

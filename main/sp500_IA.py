@@ -1,8 +1,9 @@
 # MAIN
 from modules.mod_init import *
-from paths.paths import *
 from modules.mod_dtset_clean import mod_dtset_clean
 from modules.mod_preprocessing import mod_preprocessing
+from paths.paths import *
+from columns.columns import *
 
 print(f'START MAIN\n')
 

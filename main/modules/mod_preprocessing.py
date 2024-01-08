@@ -4,8 +4,9 @@ Created on Sat Dec 30 21:06:19 2023
 @author: jlahoz
 """
 from modules.mod_init import *
-from paths.paths import *
 from functions.def_functions import *
+from paths.paths import *
+from columns.columns import *
 
 def mod_preprocessing (df_data_clean,filter_start_date,filter_endin_date):
     print(f'START MODUL mod_preprocessing')
@@ -47,7 +48,7 @@ def mod_preprocessing (df_data_clean,filter_start_date,filter_endin_date):
     df_plots(df_preprocessing['date'],df_preprocessing['close'],'date','close','lines')
     
     # SAVE Dataframe
-    excel_file_path = os.path.join(path_base, folder_functional, "df_preprocessing.xlsx")
+    excel_file_path = os.path.join(path_base, folder_preprocessing, "df_preprocessing.xlsx")
     df_preprocessing.to_excel(excel_file_path, index=False)
     
     print(f'ENDIN MODUL mod_preprocessing')

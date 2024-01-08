@@ -6,6 +6,7 @@ Created on Sun Jan  7 10:03:49 2024
 from modules.mod_init import *
 from functions.def_functions import *
 from paths.paths import *
+from columns.columns import *
 
 # READING file
 df_preprocessing = pd.read_excel(path_preprocessing, header=None, skiprows=1, names=columns_preprocessing)
