@@ -5,12 +5,11 @@ from modules.mod_preprocessing import mod_preprocessing
 from paths.paths import *
 from columns.columns import *
 
+
 print(f'START MAIN\n')
 
 # YAHOO Call
 symbol = "^GSPC"
-global start_date
-global endin_date
 
 start_date = "1980-01-01"
 endin_date = "2020-12-31"
@@ -21,7 +20,7 @@ sp500_data.to_csv(path_file_csv)
 #print(f"The data has been saved to: {path_file_csv}")
 
 #READING yahoo file
-df_data = pd.read_csv(path_file_csv, header=None, skiprows=1, names=columns_csv)
+df_data = pd.read_csv(path_file_csv, header=None, skiprows=1, names=columns_csv_yahoo)
 
 #CALL module Datacleaning
 df_data_clean = mod_dtset_clean(df_data,start_date,endin_date)

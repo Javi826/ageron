@@ -1,12 +1,7 @@
-#MODULE_PIPELINES
-"""
-Created on Sat Dec 30 21:06:19 2023
-@author: jlahoz
-"""
-from modules.mod_init import *
+#MODULE_PREPROCESSING
+
 from functions.def_functions import *
 from paths.paths import *
-from columns.columns import *
 
 def mod_preprocessing (df_data_clean,filter_start_date,filter_endin_date):
     print(f'START MODUL mod_preprocessing')

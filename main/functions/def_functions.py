@@ -4,10 +4,11 @@ Created on Sun Dec 31 09:53:59 2023
 @author: jlahoz
 """
 from modules.mod_init import *
+from columns.columns import *
 
 
 def day_week(df_data_clean):
-    
+       
     # column with dates
     date_column = 'date' 
     # ensuring date_column with date format
@@ -17,18 +18,34 @@ def day_week(df_data_clean):
     
     return df_data_clean
 
+
+def add_index_column(df_data_clean):
+    
+    # add index
+    df_data_clean.insert(0, 'index_id', range(1, len(df_data_clean) + 1))
+    df_data_clean['index_id'] = df_data_clean['index_id'].apply(lambda x: f'{x:05d}')
+    
+    return df_data_clean
+
+def date_anio(df_data_clean):
+    
+    df_data_clean['date'] = pd.to_datetime(df_data_clean['date'])    
+    # Extract year
+    df_data_clean['date_anio'] = df_data_clean['date'].dt.year.astype(str).str[:4]
+    
+    return df_data_clean
+
 def var_day(df_data_clean):
 
-    # Calcular la variación diaria
+    # Sort out var_day
     df_data_clean['var_day'] = (df_data_clean['close'] - df_data_clean['close'].shift(1)) / df_data_clean['close'] * 100
         
     return df_data_clean
 
 def sort_columns(df_data_clean):
 
-    #desired_column_order = columns_clean
-    desired_column_order= ['date', 'day_week', 'close', 'open', 'high', 'low', 'adj_close', 'var_day','volume']
-    # Asegúrate de que todas las columnas especificadas estén presentes en el DataFrame
+    desired_column_order = columns_clean_order
+    # Ensuure columns in dataframe
     missing_columns = set(desired_column_order) - set(df_data_clean.columns)
     if missing_columns:
         raise ValueError(f"following columns no in DataFrame: {', '.join(missing_columns)}")

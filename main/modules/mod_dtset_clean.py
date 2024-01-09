@@ -1,14 +1,7 @@
 # DATASET CLEANING
-from modules.mod_init import *
+
 from functions.def_functions import *
 from paths.paths import *
-from columns.columns import *
-
-
-#df_data = pd.read_csv(path_file_csv, header=None, skiprows=1, names=['date','open','high','low','close','adj_close','volume'])
-#start_date = "1970-01-01"
-#endin_date = "1990-12-31"
-
 
 def mod_dtset_clean(df_data,start_date,endin_date):
     print('\n')
@@ -19,6 +12,8 @@ def mod_dtset_clean(df_data,start_date,endin_date):
     if 'df_data_clean' in locals() and restart_dataframes:del df_data_clean  # delete dataframe if exits 
             
     df_data_clean = df_data.copy()
+    df_data_clean = add_index_column(df_data_clean)
+    df_data_clean = date_anio(df_data_clean)
     df_data_clean = day_week(df_data_clean)
     df_data_clean = var_day(df_data_clean)
     df_data_clean = sort_columns(df_data_clean)
