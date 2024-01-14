@@ -5,7 +5,6 @@ Created on Sat Dec 30 21:06:19 2023
 """
 
 import yfinance as yf
-import tensorflow as tf
 import warnings
 import time
 import pandas as pd
@@ -25,6 +24,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LinearRegression
 
 from tensorflow.keras import layers, models, initializers
+import tensorflow as tf
 
 # IGNORE WARNINGS
 warnings.filterwarnings("ignore")

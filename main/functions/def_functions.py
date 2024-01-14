@@ -1,8 +1,5 @@
 #FUNTCIONS
-"""
-Created on Sun Dec 31 09:53:59 2023
-@author: jlahoz
-"""
+
 from modules.mod_init import *
 from columns.columns import *
 
@@ -68,8 +65,9 @@ def rounding_data(df_data_clean):
                 
     return df_data_clean
 
-def filter_data_by_date_range(df, start_date, end_date):
-    return df[(df['date'] >= start_date) & (df['date'] <= end_date)]
+def filter_data_by_date_range(df, filter_start_date, filter_endin_date):
+        
+    return df[(df['date'] >= filter_start_date) & (df['date'] <= filter_endin_date)]
 
 
 def df_plots(x, y, x_label, y_label,plot_style):
