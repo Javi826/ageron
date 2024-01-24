@@ -5,7 +5,6 @@ from paths.paths import *
 
 def mod_preprocessing (df_data_clean,filter_start_date,filter_endin_date):
     print(f'START MODUL mod_preprocessing')
-
     df_clean_filter = filter_data_by_date_range(df_data_clean, filter_start_date, filter_endin_date)
     
     #PREPROCESSING

@@ -22,6 +22,7 @@ def add_index_column(df_data_clean):
     df_data_clean.insert(0, 'index_id', range(1, len(df_data_clean) + 1))
     df_data_clean['index_id'] = df_data_clean['index_id'].apply(lambda x: f'{x:05d}')
     
+    
     return df_data_clean
 
 def date_anio(df_data_clean):
@@ -36,6 +37,7 @@ def var_day(df_data_clean):
 
     # Sort out var_day
     df_data_clean['var_day'] = (df_data_clean['close'] - df_data_clean['close'].shift(1)) / df_data_clean['close'] * 100
+   
         
     return df_data_clean
 
@@ -49,7 +51,7 @@ def sort_columns(df_data_clean):
 
     # Sort columns
     df_data_clean = df_data_clean[desired_column_order]
-
+    
     return df_data_clean
 
 def rounding_data(df_data_clean):
@@ -62,7 +64,7 @@ def rounding_data(df_data_clean):
     for column in columns_to_round:
       if column in df_data_clean.columns:
           df_data_clean[column] = df_data_clean[column].round(2)
-                
+            
     return df_data_clean
 
 def filter_data_by_date_range(df, filter_start_date, filter_endin_date):

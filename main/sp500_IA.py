@@ -6,7 +6,8 @@ from paths.paths import *
 from columns.columns import *
 
 
-print(f'START MAIN\n')
+print(f'START MAIN')
+print(f'START MAIN')
 
 # YAHOO Call
 symbol = "^GSPC"
@@ -30,4 +31,4 @@ filter_start_date = '2000-01-01'
 filter_endin_date = '2019-12-31'
 df_preprocessing = mod_preprocessing(df_data_clean,filter_start_date,filter_endin_date)
 
-print(f'ENDIN MAIN\n')
+print(f'ENDIN MAIN')
